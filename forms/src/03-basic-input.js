@@ -5,11 +5,34 @@ document.body.appendChild(content);
 
 module.exports = class extends React.Component {
   static displayName = "03-basic-input";
+  state = {
+    fields: {
+      name: '',
+      email: ''
+    },
+    people: [],
+  }
 
   onFormSubmit = (evt) => {
     evt.preventDefault();
-    console.log(this.refs.name.value);
+    const people = [
+      ...this.state.people,
+      this.state.fields
+    ]
+    this.setState({
+      people: people, 
+      fields: {
+        name: '',
+        email: ''
+      }
+    });
   };
+
+  onInputChange = (evt) => {
+    const fields = this.state.fields
+    fields[evt.target.name] = evt.target.value
+    this.setState({fields: fields});
+  }
 
   render() {
     return (
@@ -19,11 +42,27 @@ module.exports = class extends React.Component {
         <form onSubmit={this.onFormSubmit}>
           <input
             placeholder='Name'
-            ref='name'
+            name='name'
+            value={this.state.fields.name}
+            onChange={this.onInputChange}
+          />
+
+          <input
+            placeholder='Email'
+            name='email'
+            value={this.state.fields.email}
+            onChange={this.onInputChange}
           />
 
           <input type='submit' />
         </form>
+
+        <div>
+          <h3>People</h3>
+          <ul>
+            {this.state.people.map((person,i)=> <li key={i}>{person.name} {person.email}</li>)}
+          </ul>
+        </div>
       </div>
     );
   }

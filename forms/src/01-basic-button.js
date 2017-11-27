@@ -14,6 +14,10 @@ module.exports = class extends React.Component {
     console.log('The user clicked button-2: amazing', evt);
   };
 
+  onButtonClick = (evt) => {
+    console.log(`The user clicked ${evt.target.name}: ${evt.target.value}`);
+  }
+
   render() {
     return (
       <div>
@@ -22,7 +26,7 @@ module.exports = class extends React.Component {
         <button
           name='button-1'
           value='great'
-          onClick={this.onGreatClick}
+          onClick={this.onButtonClick}
         >
           Great
         </button>
@@ -30,7 +34,7 @@ module.exports = class extends React.Component {
         <button
           name='button-2'
           value='amazing'
-          onClick={this.onAmazingClick}
+          onClick={this.onButtonClick}
         >
           Amazing
         </button>

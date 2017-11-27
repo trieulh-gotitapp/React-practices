@@ -52,7 +52,7 @@ class App extends React.Component {
 
   render() {
     const messages = store.getState().messages;
-
+    console.log(messages)
     return (
       <div className='ui segment'>
         <MessageView messages={messages} />
