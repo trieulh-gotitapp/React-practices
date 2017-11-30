@@ -31,6 +31,28 @@ import uuid from 'uuid';
 //   }
 // }
 
+function deleteMessage(id) {
+  return {
+    type: 'DELETE_MESSAGE',
+    id: id
+  }
+}
+
+function addmessage(text, threadId) {
+  return {
+    type: 'ADD_MESSAGE',
+    text: text,
+    threadId: threadId,
+  }
+}
+
+function openThread(id) {
+  return {
+    type: 'OPEN_THREAD',
+    id: id,
+  }
+}
+
 const reducer = combineReducers({
   activeThreadId: activeThreadIdRecucer,
   threads: threadsReducer,
@@ -163,10 +185,7 @@ const mapStateToTabProps = (state) => {
 }
 
 const mapDispatchtoTabProps = (dispatch) => ({
-  onClick: (id) => (store.dispatch({
-    type: 'OPEN_THREAD',
-    id: id
-  })),
+  onClick: (id) => (store.dispatch(openThread(id))),
 })
 
 
@@ -188,10 +207,7 @@ const mapStateToThreadProps = (state) => ({
 
 const mapDispatchtoThreadProps = (dispatch) => ({
   onMessageClick: (id) => (
-    dispatch({
-      type: 'DELETE_MESSAGE',
-      id: id
-    })
+    dispatch(deleteMessage(id))
   ),
   dispatch: dispatch,
 })
@@ -200,11 +216,7 @@ const mergeThreadProps = (stateProps, dispatchProps) => ({
   ...stateProps,
   ...dispatchProps,
   onMessageSubmit: (text) => (
-    dispatchProps.dispatch({
-      type: 'ADD_MESSAGE',
-      text: text,
-      threadId: stateProps.thread.id,
-    })
+    dispatchProps.dispatch(addmessage(text,stateProps.thread.id))
   )
 })
 
